@@ -3,7 +3,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query'
 import { ThemeProvider } from 'next-themes'
 import { Toaster } from 'react-hot-toast'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import "@n8n/chat/style.css";
+import { createChat } from "@n8n/chat";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -16,6 +18,13 @@ export function Providers({ children }: { children: React.ReactNode }) {
       },
     },
   }))
+
+  useEffect(() => {
+    createChat({
+      webhookUrl:
+        "https://jgewirz.app.n8n.cloud/webhook/f6ae650e-8071-411e-b1a7-6317ea002fe3/chat",
+    });
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
